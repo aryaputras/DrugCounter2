@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20B50" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Drug" representedClassName="Drug" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String"/>
+        <attribute name="dailyIntake" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dosage" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="histories" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="shape" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="History" representedClassName="History" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="drugID" optional="YES" attributeType="String"/>
+        <attribute name="drugName" optional="YES" attributeType="String"/>
+        <attribute name="timeTaken" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="NotificationEntity" representedClassName="NotificationEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="drugName" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="Transformable"/>
+    </entity>
+    <elements>
+        <element name="Drug" positionX="-63" positionY="-18" width="128" height="134"/>
+        <element name="History" positionX="-45" positionY="18" width="128" height="89"/>
+        <element name="NotificationEntity" positionX="-45" positionY="45" width="128" height="59"/>
+    </elements>
+</model>
