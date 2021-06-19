@@ -6,21 +6,30 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DrugDetailView: View {
     var drug: Drug?
+    @State var isMorningNotificationActive = false
+    @State var isNoonNotificationActive = false
+    @State var isNightNotificationActive = false
+    
     @State var rootIsActive: Bool = false
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     @GestureState private var dragOffset = CGSize.zero
     @Environment(\.managedObjectContext) private var viewContext
     
-   //@StateObject var vm = DrugDetailViewModel()
+    //@StateObject var vm = DrugDetailViewModel()
     @FetchRequest(sortDescriptors: [])
-   
+    
     //Sort here
     
     var histories: FetchedResults<History>
+    
+    
+    @FetchRequest(sortDescriptors: [])
+    var notifications: FetchedResults<NotificationEntity>
     
     
     
@@ -40,11 +49,27 @@ struct DrugDetailView: View {
             return item.drugID == drug?.id?.uuidString && range.contains(item.timeTaken!)
         }
         
+        var notificationList: [FetchedResults<NotificationEntity>.Element] = notifications.filter { (item) -> Bool in
+            return item.drugName == drug?.name
+        }
+        
+        var filterWithMorning = notificationList.filter { (filteredItem) -> Bool in
+            return filteredItem.time == 8
+        }
+        
+        var filterWithNoon = notificationList.filter { (filteredItem) -> Bool in
+            return filteredItem.time == 12
+        }
+        
+        var filterWithNight = notificationList.filter { (filteredItem) -> Bool in
+            return filteredItem.time == 18
+        }
+        
         ZStack{
-       RoundedRectangle(cornerRadius: 0)
-        .frame(width: .infinity, height: .infinity, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-        .ignoresSafeArea()
-        .foregroundColor(Color(.themeDarkGray))
+            RoundedRectangle(cornerRadius: 0)
+                .frame(width: .infinity, height: .infinity, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .ignoresSafeArea()
+                .foregroundColor(Color(.themeDarkGray))
             
             HStack{
                 Button(action: {
@@ -53,29 +78,103 @@ struct DrugDetailView: View {
                     Image(systemName: "xmark")
                         .foregroundColor(.gray)
                         .font(.system(size: 35, weight: .semibold, design: .rounded))
-                        
+                    
                 })
             }.position(x: UIScreen.main.bounds.maxX - 40, y: UIScreen.main.bounds.minY + 20)
             
-        
+            
             
             VStack{
-               ZStack{
-                getShape(shape: (drug?.shape)!, color: (drug?.color)!)
-                    .scaleEffect(2)
+                Spacer()
+                
+                ZStack{
+                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                        .frame(width: UIScreen.main.bounds.maxX - 10, height: 80 , alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        .foregroundColor(Color(.displayP3, white: 0.2, opacity: 1))
+                HStack{
+                    
+                    VStack{
+                        
+                        Text("Morning")
+                            .foregroundColor(.white)
+                        
+                        Toggle(isOn: $isMorningNotificationActive, label: {
+                            
+                        }).offset(x: -30, y: 0)
+                        .toggleStyle(SwitchToggleStyle(tint: .blue))
+                        .onTapGesture {
+                            if isMorningNotificationActive == false {
+                                deleteNotification(identifier: filterWithMorning[0].requestIdentifier!)
+                                
+                            } else {
+                                
+                                setNotification(hour: 8, drugName: (drug?.name!)!)
+                                
+                            }
+                        }
+                        //ONCHANGE IF ISMORNING ACTIVE add notif, if not delete notif..
+                    }
+                    VStack{
+                        
+                        Text("Noon")
+                            .foregroundColor(.white)
+                        
+                        Toggle(isOn: $isNoonNotificationActive, label: {
+                            
+                        }).offset(x: -30, y: 0)
+                        .toggleStyle(SwitchToggleStyle(tint: .black))
+                        .onChange(of: isNoonNotificationActive, perform: { value in
+                            if isNoonNotificationActive == false {
+                                deleteNotification(identifier: filterWithNoon[0].requestIdentifier!)
+                                
+                            } else {
+                                
+                                setNotification(hour: 12, drugName: (drug?.name!)!)
+                                
+                            }
+                        })
+                    }
+                    VStack{
+                        
+                        Text("Night")
+                            .foregroundColor(.white)
+                        
+                        Toggle(isOn: $isNightNotificationActive, label: {
+                        }).offset(x: -30, y: 0)
+                        .toggleStyle(SwitchToggleStyle(tint: .black))
+                        .onChange(of: isNightNotificationActive, perform: { value in
+                            if isNightNotificationActive == false {
+                                deleteNotification(identifier: filterWithNight[0].requestIdentifier!)
+                                
+                            } else {
+                                
+                                setNotification(hour: 18, drugName: (drug?.name!)!)
+                                
+                            }
+                        })
+                    }
+                    
+                }
+                    
+                }
+                
+                Spacer()
+                ZStack{
+                    getShape(shape: (drug?.shape)!, color: (drug?.color)!)
+                        .scaleEffect(2)
                 }
                 HStack{
-                
-                Text((drug?.name)!)
-                    .foregroundColor(.white)
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
-                Spacer()
+                    
+                    Text((drug?.name)!)
+                        .foregroundColor(.white)
+                        .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    Spacer()
                 }.padding(.horizontal, 15)
                 HStack{
                     Text(getDosage(drugs: drug!))
-                    .foregroundColor(.white)
-                    .font(.system(size: 16, weight: .light, design: .rounded))
-                Spacer()
+                        .foregroundColor(.white)
+                        .font(.system(size: 16, weight: .light, design: .rounded))
+                    Spacer()
                 }.padding(.horizontal, 15)
                 
                 
@@ -83,34 +182,34 @@ struct DrugDetailView: View {
                 
                 
                 if filteredHistory.count < drug!.dailyIntake {
-                ProgressView("Progress", value: Float(filteredHistory.count), total: Float(drug!.dailyIntake)).foregroundColor(.white)
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-                    .padding(.top, 25)
-                    .padding(.horizontal, 25)
-                HStack{
-                    Text("\(filteredHistory.count)")
-                        .foregroundColor(.white)
+                    ProgressView("Progress", value: Float(filteredHistory.count), total: Float(drug!.dailyIntake)).foregroundColor(.white)
                         .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        .padding(.top, 25)
+                        .padding(.horizontal, 25)
+                    HStack{
+                        Text("\(filteredHistory.count)")
+                            .foregroundColor(.white)
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        
+                        Spacer()
+                        Text("out of")
+                            .foregroundColor(.white)
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        Spacer()
+                        Text("\(drug!.dailyIntake)")
+                            .foregroundColor(.white)
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        
+                    }.padding(.horizontal, 25)
+                    .padding(.bottom, 25)
                     
-                    Spacer()
-                    Text("out of")
-                        .foregroundColor(.white)
-                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                    Spacer()
-                    Text("\(drug!.dailyIntake)")
-                        .foregroundColor(.white)
-                        .font(.system(size: 16, weight: .semibold, design: .rounded))
                     
-                }.padding(.horizontal, 25)
-                .padding(.bottom, 25)
-                
-                
                 } else {
                     Image("check")
                         .resizable()
                         .frame(width: 50, height: 50, alignment: .center)
-                        
-                       
+                    
+                    
                 }
                 
                 
@@ -125,45 +224,60 @@ struct DrugDetailView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .frame(width: 200, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             .foregroundColor(.white)
-                    Text("Gulp")
+                        Text("Gulp")
                     }
                 })
                 
-               
-
-                DrugDetailListView(drugID: drug?.id?.uuidString)
-                    .frame(width: UIScreen.main.bounds.maxX - 40, height: 300, alignment: .center)
                 
+                
+                DrugDetailListView(drugID: drug?.id?.uuidString)
+                    .frame(width: UIScreen.main.bounds.maxX - 40, height: 200, alignment: .center)
+                
+                
+                
+              
+                                .onAppear {
+                                    //IF MORNING NOTIF != nil, ismoringnotif = true
+                                    if filterWithMorning.count != 0 {
+                                        isMorningNotificationActive = true
+                                    }
+                                    if filterWithNoon.count != 0 {
+                                        isNoonNotificationActive = true
+                                    }
+                
+                                    if filterWithNight.count != 0 {
+                                        isNightNotificationActive = true
+                                    }
+                
+                
+                                }
+                Spacer()
             }
             
         }.navigationTitle("").navigationBarHidden(true)
         .gesture(DragGesture().updating($dragOffset, body: { (value, state, transaction) in
-               
-            if(value.startLocation.x < UIScreen.main.bounds.maxX / 2 && value.translation.width > 75) {
-                       self.presentationMode.wrappedValue.dismiss()
-                   }
-                   
-               }))
-        
             
-    
+            if(value.startLocation.x < UIScreen.main.bounds.maxX / 2 && value.translation.width > 75) {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+            
+        }))
+        
+        
+        
     }
     //--------------------------------------------------------------------------------------------------------
     
     
-    
-    
-    
-    
-    
+    func saveNotificationData(drugName: String, hour: Int, identifier: String){
+        let newNotification = NotificationEntity(context: viewContext)
+        newNotification.drugName = drugName
+        newNotification.time = Int32(hour)
+        newNotification.requestIdentifier = identifier
         
-    
-    func deleteDrugs(drug: Drug){
-        viewContext.delete(drug)
-        do{
-            try viewContext.save()} catch {
-                print("error")
-            }
+        //set Local notification
+        //    print(drugName + "\(hour)" + identifier.uuidString)
+        saveContext()
     }
     private func saveContext() {
         do {
@@ -174,10 +288,88 @@ struct DrugDetailView: View {
         }
     }
     
+    func setNotification(hour: Int, drugName: String){
+        print("notification set")
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        
+        
+        
+        dateComponents.hour = hour
+        //Change minutes based on time to test the notification
+        dateComponents.minute = 36
+        
+        
+        // Create the trigger as a repeating event.
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Feed the cat"
+        content.subtitle = "its time to take your \(drugName)"
+        content.sound = UNNotificationSound.default
+        
+        // show this notification five on the date
+        
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: dateComponents, repeats: true)
+        
+        // choose a random identifier
+        let uuid = UUID()
+        let request = UNNotificationRequest(identifier: uuid.uuidString, content: content, trigger: trigger)
+        
+        // add our notification request
+        UNUserNotificationCenter.current().add(request)
+        
+        saveNotificationData(drugName: drugName, hour: hour, identifier: uuid.uuidString)
+        
+        
+        
+        
+    }
+    
+    func deleteNotification(identifier: String) {
+        
+        print("function run")
+        
+        
+        //deletenotification
+        let center = UNUserNotificationCenter.current()
+        
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        center.removeDeliveredNotifications(withIdentifiers: [identifier])
+        
+        
+        
+        //delete notificationData
+        let request = NSFetchRequest<NotificationEntity>(entityName: "NotificationEntity")
+        request.predicate = NSPredicate(format:"requestIdentifier = %@", identifier)
+        let result = try? viewContext.fetch(request)
+        let resultData = result as! [NotificationEntity]
+        
+        for object in resultData {
+            viewContext.delete(object)
+        }
+        
+        do {
+            try viewContext.save()
+            print("saved!")
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     func takePills(drugs: Drug) {
- 
+        
         var newPill = History(context: viewContext)
         newPill.drugID = drug?.id?.uuidString
         newPill.drugName = drugs.name
@@ -185,8 +377,8 @@ struct DrugDetailView: View {
         newPill.timeTaken = Date()
         
         
-            saveContext()
-     //   print(drug.histories as Any)
+        saveContext()
+        //   print(drug.histories as Any)
     }
     
     

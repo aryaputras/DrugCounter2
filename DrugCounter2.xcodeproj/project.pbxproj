@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		C00BDEA52580F55C00B77EFB /* RootPresentationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00BDEA42580F55C00B77EFB /* RootPresentationMode.swift */; };
 		C01B9A5A25E6C69A005BB9E1 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C01B9A5925E6C69A005BB9E1 /* CloudKit.framework */; };
-		C01B9A6825E6CB1E005BB9E1 /* Model.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C0DC7807257E3FB40024FECB /* Model.xcmappingmodel */; };
+		C05953E226583A680061E18A /* DrugCounter2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C08D23A1257B5C05004F4C96 /* DrugCounter2.xcdatamodeld */; };
+		C059540C265A8E410061E18A /* NotificationEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C059540A265A8E410061E18A /* NotificationEntity+CoreDataClass.swift */; };
+		C059540D265A8E410061E18A /* NotificationEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C059540A265A8E410061E18A /* NotificationEntity+CoreDataClass.swift */; };
+		C059540E265A8E410061E18A /* NotificationEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C059540B265A8E410061E18A /* NotificationEntity+CoreDataProperties.swift */; };
+		C059540F265A8E410061E18A /* NotificationEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C059540B265A8E410061E18A /* NotificationEntity+CoreDataProperties.swift */; };
 		C086D17C25E6BE2B004C02F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C086D17B25E6BE2B004C02F9 /* Assets.xcassets */; };
 		C086D18325E6BE2B004C02F9 /* DrugCounterWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C086D18225E6BE2B004C02F9 /* DrugCounterWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C086D18825E6BE2B004C02F9 /* DrugCounter2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C086D18725E6BE2B004C02F9 /* DrugCounter2App.swift */; };
@@ -37,11 +41,9 @@
 		C0DB10BC2655C9BB00E1ADFA /* PopUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DB10BB2655C9BB00E1ADFA /* PopUpViewModel.swift */; };
 		C0DC7800257E035E0024FECB /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DC77FF257E035E0024FECB /* Helper.swift */; };
 		C0DC7804257E3AD70024FECB /* DrugDetailListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DC7803257E3AD70024FECB /* DrugDetailListView.swift */; };
-		C0DC7808257E3FB40024FECB /* Model.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C0DC7807257E3FB40024FECB /* Model.xcmappingmodel */; };
 		C0F51AFD25E6D216002B88B7 /* Drug+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DC78112580898B0024FECB /* Drug+CoreDataProperties.swift */; };
 		C0F51B0D25E6D3B4002B88B7 /* Drug+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DC78102580898B0024FECB /* Drug+CoreDataClass.swift */; };
 		C0F51B1125E6D3B9002B88B7 /* Drug+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DC78112580898B0024FECB /* Drug+CoreDataProperties.swift */; };
-		C0F51B1525E6D3C1002B88B7 /* DrugCounter2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C08D23A1257B5C05004F4C96 /* DrugCounter2.xcdatamodeld */; };
 		C0F51B2C25E6D42E002B88B7 /* Drug+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DC78102580898B0024FECB /* Drug+CoreDataClass.swift */; };
 		C0F51B3025E6D435002B88B7 /* DrugCounter2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C08D23A1257B5C05004F4C96 /* DrugCounter2.xcdatamodeld */; };
 		C0F51B3725E6D486002B88B7 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09FA90A257CE4E500F2E8AA /* Persistence.swift */; };
@@ -97,6 +99,9 @@
 		C00BDEA42580F55C00B77EFB /* RootPresentationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPresentationMode.swift; sourceTree = "<group>"; };
 		C01B9A5525E6C698005BB9E1 /* DrugCounterWatch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DrugCounterWatch Extension.entitlements"; sourceTree = "<group>"; };
 		C01B9A5925E6C69A005BB9E1 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.1.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		C05953D22658392D0061E18A /* DrugCounter 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DrugCounter 2.xcdatamodel"; sourceTree = "<group>"; };
+		C059540A265A8E410061E18A /* NotificationEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C059540B265A8E410061E18A /* NotificationEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C086D17925E6BE2A004C02F9 /* DrugCounterWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrugCounterWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C086D17B25E6BE2B004C02F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C086D17D25E6BE2B004C02F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -208,6 +213,8 @@
 		C08D238A257B5C05004F4C96 = {
 			isa = PBXGroup;
 			children = (
+				C059540A265A8E410061E18A /* NotificationEntity+CoreDataClass.swift */,
+				C059540B265A8E410061E18A /* NotificationEntity+CoreDataProperties.swift */,
 				C0F51B4B25E6D55F002B88B7 /* History+CoreDataClass.swift */,
 				C0F51B4C25E6D55F002B88B7 /* History+CoreDataProperties.swift */,
 				C0DC78102580898B0024FECB /* Drug+CoreDataClass.swift */,
@@ -411,14 +418,15 @@
 				C0F51B3025E6D435002B88B7 /* DrugCounter2.xcdatamodeld in Sources */,
 				C0F51B2C25E6D42E002B88B7 /* Drug+CoreDataClass.swift in Sources */,
 				C0F51B4E25E6D55F002B88B7 /* History+CoreDataClass.swift in Sources */,
+				C059540F265A8E410061E18A /* NotificationEntity+CoreDataProperties.swift in Sources */,
 				C0F51AFD25E6D216002B88B7 /* Drug+CoreDataProperties.swift in Sources */,
 				C0F51B3725E6D486002B88B7 /* Persistence.swift in Sources */,
 				C086D18C25E6BE2B004C02F9 /* NotificationController.swift in Sources */,
-				C01B9A6825E6CB1E005BB9E1 /* Model.xcmappingmodel in Sources */,
 				C086D18A25E6BE2B004C02F9 /* ContentView.swift in Sources */,
 				C0F51B5025E6D55F002B88B7 /* History+CoreDataProperties.swift in Sources */,
 				C086D19025E6BE2B004C02F9 /* ComplicationController.swift in Sources */,
 				C086D18825E6BE2B004C02F9 /* DrugCounter2App.swift in Sources */,
+				C059540D265A8E410061E18A /* NotificationEntity+CoreDataClass.swift in Sources */,
 				C086D18E25E6BE2B004C02F9 /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,25 +435,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0F51B1525E6D3C1002B88B7 /* DrugCounter2.xcdatamodeld in Sources */,
+				C05953E226583A680061E18A /* DrugCounter2.xcdatamodeld in Sources */,
 				C0F51B1125E6D3B9002B88B7 /* Drug+CoreDataProperties.swift in Sources */,
 				C0F51B0D25E6D3B4002B88B7 /* Drug+CoreDataClass.swift in Sources */,
 				C09A841E25DBF8A300244D19 /* Services.swift in Sources */,
 				C08E544126569F5B0057B2CD /* DrugDetailViewModel.swift in Sources */,
 				C0DC7800257E035E0024FECB /* Helper.swift in Sources */,
 				C0B22AD2257DBE79008FF3B9 /* HistoryView.swift in Sources */,
+				C059540C265A8E410061E18A /* NotificationEntity+CoreDataClass.swift in Sources */,
 				C00BDEA52580F55C00B77EFB /* RootPresentationMode.swift in Sources */,
 				C0F51B4F25E6D55F002B88B7 /* History+CoreDataProperties.swift in Sources */,
 				C0B22ACF257DBE45008FF3B9 /* MainView.swift in Sources */,
 				C0B22AD5257DC5D1008FF3B9 /* PopUpView.swift in Sources */,
 				C09FA913257D331E00F2E8AA /* DrugSelectionView.swift in Sources */,
-				C0DC7808257E3FB40024FECB /* Model.xcmappingmodel in Sources */,
 				C08D2399257B5C05004F4C96 /* ContentView.swift in Sources */,
 				C08D2397257B5C05004F4C96 /* DrugCounter2App.swift in Sources */,
 				C0B22AD8257DEAF0008FF3B9 /* DrugDetailView.swift in Sources */,
 				C09FA910257D32CA00F2E8AA /* UI.swift in Sources */,
 				C09FA90B257CE4E500F2E8AA /* Persistence.swift in Sources */,
 				C0F51B4D25E6D55F002B88B7 /* History+CoreDataClass.swift in Sources */,
+				C059540E265A8E410061E18A /* NotificationEntity+CoreDataProperties.swift in Sources */,
 				C0DC7804257E3AD70024FECB /* DrugDetailListView.swift in Sources */,
 				C0DB10BC2655C9BB00E1ADFA /* PopUpViewModel.swift in Sources */,
 			);
@@ -772,6 +781,7 @@
 		C08D23A1257B5C05004F4C96 /* DrugCounter2.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				C05953D22658392D0061E18A /* DrugCounter 2.xcdatamodel */,
 				C08D23A2257B5C05004F4C96 /* DrugCounter2.xcdatamodel */,
 			);
 			currentVersion = C08D23A2257B5C05004F4C96 /* DrugCounter2.xcdatamodel */;

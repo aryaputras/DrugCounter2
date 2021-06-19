@@ -41,27 +41,9 @@ func dateToString(date: Date) -> String{
     return string
 }
 func getShape(shape: String, color: String) -> some View {
-    switch shape {
-            case "Circle":
-                return AnyView(VStack{ Circle()
-                    .frame(width: 50, height: 50, alignment: .center)
-                    .foregroundColor(getColor(color: color))
-                })
-            case "Capsule":
-                return AnyView(VStack{ Capsule()
-                    .frame(width: 80, height: 30, alignment: .center)
-                    .foregroundColor(getColor(color: color))
-                })
-            case "Ellipse":
-                return AnyView(VStack{ Ellipse()
-                    .frame(width: 70, height: 30, alignment: .center)
-                    .foregroundColor(getColor(color: color))
-                })
-    default:
-        return AnyView(VStack{ Circle()
-            .frame(width: 50, height: 50, alignment: .center)
-            .foregroundColor(getColor(color: color))
-        })
-    
-    }
+    return Image(shape + color).resizable()
+        .frame(width: 130, height: 130, alignment: .center)
+        .shadow(color: Color(hue: 0, saturation: 0, brightness: 0, opacity: 0.35), radius: 4, x: 0.0, y: 3)
 }
+
+

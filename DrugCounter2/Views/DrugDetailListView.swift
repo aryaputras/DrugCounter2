@@ -41,6 +41,7 @@ struct DrugDetailListView: View {
                         HStack{
                         Text(dateToString(date: item.timeTaken!))
                             .foregroundColor(.white)
+                            .font(.system(.body, design: .monospaced))
                         Spacer()
                         }.padding(.horizontal, 10)
                     }.onAppear {

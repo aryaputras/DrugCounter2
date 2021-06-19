@@ -16,11 +16,11 @@ struct MainView: View {
                         Text("Menu")
                     }
 
-                HistoryView()
-                    .tabItem {
-                        Image(systemName: "square.and.pencil")
-                        Text("History")
-                    }
+//                HistoryView()
+//                    .tabItem {
+//                        Image(systemName: "square.and.pencil")
+//                        Text("History")
+//                    }
             }
     }
 }

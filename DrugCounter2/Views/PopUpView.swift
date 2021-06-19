@@ -42,7 +42,8 @@ struct PopUpView: View {
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                     Spacer()
                     Button(action: {
-                        popUpViewModel.setNotification(hour: popUpViewModel.notificationHour[0], drugName: popUpViewModel.insertName!)
+                        setNotification(hour: popUpViewModel.notificationHour, drugName: popUpViewModel.insertName!)
+                       
                         addDrug(name: popUpViewModel.insertName! , color: popUpViewModel.selectedColor ?? "White", shape: popUpViewModel.selectedShape ?? "Circle", intake: popUpViewModel.dailyIntake)
                         
                     }, label: {
@@ -91,7 +92,7 @@ struct PopUpView: View {
                                         .background(popUpViewModel.selectedColor == color.name ? RoundedRectangle(cornerRadius: 5).foregroundColor(Color(.themeLightGray)).frame(width: 55, height: 55, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) : nil)
                                         .onTapGesture {
                                             popUpViewModel.selectedColor = color.name
-                                            print(popUpViewModel.selectedColor as Any)
+                                        //    print(popUpViewModel.selectedColor as Any)
                                         }
                                     
                                     
@@ -137,6 +138,10 @@ struct PopUpView: View {
                 VStack{
                     Text("what's your daily intake")
                     HStack{
+                        
+                        
+                        
+                        
                         Button(action: {
                             if popUpViewModel.dailyIntake > 0 {
                                 popUpViewModel.dailyIntake -= 1
@@ -170,17 +175,43 @@ struct PopUpView: View {
 
                    
                 }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 HStack{
                     Button("TEST"){
-                        popUpViewModel.notificationHour.append(8)
+                        var hour = 8
+                        if popUpViewModel.notificationHour.contains(hour) {
+                            
+                        } else {
+                            popUpViewModel.notificationHour.append(hour)
+                        }
                         
                     }
                     Button("Noon"){
-                        popUpViewModel.notificationHour.append(12)
+                        var hour = 12
+                        if popUpViewModel.notificationHour.contains(hour) {
+                            
+                        } else {
+                            popUpViewModel.notificationHour.append(hour)
+                        }
                         
                     }
                     Button("Night"){
-                        popUpViewModel.notificationHour.append(18)
+                        var hour = 18
+                        if popUpViewModel.notificationHour.contains(hour) {
+                            
+                        } else {
+                            popUpViewModel.notificationHour.append(hour)
+                        }
                         
                     }
                 }
@@ -213,6 +244,8 @@ struct PopUpView: View {
                     }
                 }
             }.padding(.all, 15)
+        }.onDisappear {
+            popUpViewModel.notificationHour.removeAll() 
         }
     }
     
@@ -235,8 +268,54 @@ struct PopUpView: View {
         }
     }
 
+    func saveNotificationData(drugName: String, hour: Int, identifier: String){
+       let newNotification = NotificationEntity(context: viewContext)
+        newNotification.drugName = drugName
+        newNotification.time = Int32(hour)
+        newNotification.requestIdentifier = identifier
+
+        //set Local notification
+    //    print(drugName + "\(hour)" + identifier.uuidString)
+        saveContext()
+    }
+    
+     func setNotification(hour: [Int], drugName: String){
+    
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+
+        for i in hour {
+        
+        dateComponents.hour = i
+        //Change minutes based on time to test the notification
+        dateComponents.minute = 36
 
 
+        // Create the trigger as a repeating event.
+
+        let content = UNMutableNotificationContent()
+        content.title = "Feed the cat"
+        content.subtitle = "its time to take your \(drugName)"
+        content.sound = UNNotificationSound.default
+            
+        // show this notification five on the date
+
+        let trigger = UNCalendarNotificationTrigger(
+                 dateMatching: dateComponents, repeats: true)
+
+        // choose a random identifier
+            let uuid = UUID()
+        let request = UNNotificationRequest(identifier: uuid.uuidString, content: content, trigger: trigger)
+
+        // add our notification request
+        UNUserNotificationCenter.current().add(request)
+            
+            saveNotificationData(drugName: popUpViewModel.insertName!, hour: i, identifier: uuid.uuidString)
+           
+            
+        }
+
+     }
     private func addDrug(name: String, color: String, shape: String, intake: Int) {
         withAnimation{
             if name.isEmpty == false {

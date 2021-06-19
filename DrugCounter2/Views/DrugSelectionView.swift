@@ -72,17 +72,24 @@ struct DrugSelectionView: View {
                         ZStack{
                             
                             
-                            
+//
                             ZStack{
-                                
-                                RoundedRectangle(cornerRadius: 40)
+//
+//                                RoundedRectangle(cornerRadius: 40)
+//
+//                                    .foregroundColor(Color(.themeDarkGray))
+//                                    .shadow(color: Color(.gray), radius: 7, x: 4, y: 4)
+//
+//
+                                Image("interfacedark")
+                                    .scaleEffect(1.05)
                                     
-                                    .foregroundColor(Color(.themeDarkGray))
-                                    .shadow(color: Color(.gray), radius: 7, x: 4, y: 4)
+                                
                                 
                                 
                                 
                                 VStack{
+                                    Spacer()
                                     getShape(shape: (drug.shape)!, color: (drug.color)!)
                                     
                                     HStack{
@@ -122,7 +129,7 @@ struct DrugSelectionView: View {
                                     
                                     
                                     
-                                    
+                                    Spacer(minLength: 50)
                                 }
                             }.frame(width: 175, height: 220, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             
@@ -180,7 +187,7 @@ struct DrugSelectionView: View {
             let range = Date().startOfDay...Date().endOfDay
             return item.drugID == drugName && range.contains(item.timeTaken!)
         }
-        print(histories)
+       // print(histories)
         let count = (filteredHistory.count) ?? 1
         return count
     }
@@ -199,27 +206,6 @@ struct DrugSelectionView: View {
             fatalError("Unresolvederror")
         }
     }
-    private func deleteDrug(offsets: IndexSet) {
-        withAnimation{
-            offsets.map { drugs[$0] }.forEach(viewContext.delete)
-            saveContext()
-        }
-    }
-    private func updateDrug(_ drugs: FetchedResults<Drug>.Element) {
-        withAnimation {
-            drugs.name = "Updated"
-            saveContext()
-        }
-    }
-    private func addDrug() {
-        withAnimation{
-            let newDrug = Drug(context: viewContext)
-            newDrug.name = "Xanax"
-            newDrug.color = "Pink"
-            newDrug.shape = "Circle"
-            
-            saveContext()
-        }
-    }
-}
+
+  }
 
