@@ -97,62 +97,91 @@ struct DrugDetailView: View {
                         
                         Text("Morning")
                             .foregroundColor(.white)
-                        
-                        Toggle(isOn: $isMorningNotificationActive, label: {
+                        Button(action: {
                             
-                        }).offset(x: -30, y: 0)
-                        .toggleStyle(SwitchToggleStyle(tint: .blue))
-                        .onTapGesture {
-                            if isMorningNotificationActive == false {
+                            if isMorningNotificationActive == true {
                                 deleteNotification(identifier: filterWithMorning[0].requestIdentifier!)
-                                
+                                isMorningNotificationActive.toggle()
                             } else {
                                 
                                 setNotification(hour: 8, drugName: (drug?.name!)!)
-                                
+                                isMorningNotificationActive.toggle()
                             }
-                        }
+
+                        }, label: {
+                            ZStack{
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(width: 80, height: 45, alignment: .center)
+                                .foregroundColor(isMorningNotificationActive == true ? .red : Color(.themeDarkGray))
+                              
+                                Image(systemName: isMorningNotificationActive == true ? "bell.fill" : "bell.slash")
+                                    .foregroundColor(.white)
+                                    .scaleEffect(1.7)
+                                    
+                            }
+                                
+                        })
+                       
                         //ONCHANGE IF ISMORNING ACTIVE add notif, if not delete notif..
-                    }
+                    }.padding(.horizontal, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                     VStack{
                         
                         Text("Noon")
                             .foregroundColor(.white)
-                        
-                        Toggle(isOn: $isNoonNotificationActive, label: {
+                        Button(action: {
                             
-                        }).offset(x: -30, y: 0)
-                        .toggleStyle(SwitchToggleStyle(tint: .black))
-                        .onChange(of: isNoonNotificationActive, perform: { value in
-                            if isNoonNotificationActive == false {
+                            if isNoonNotificationActive == true {
                                 deleteNotification(identifier: filterWithNoon[0].requestIdentifier!)
-                                
+                                isNoonNotificationActive.toggle()
                             } else {
                                 
                                 setNotification(hour: 12, drugName: (drug?.name!)!)
-                                
+                                isNoonNotificationActive.toggle()
                             }
+
+                        }, label: {
+                            ZStack{
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(width: 80, height: 45, alignment: .center)
+                                .foregroundColor(isNoonNotificationActive == true ? .red : Color(.themeDarkGray))
+                                Image(systemName: isNoonNotificationActive == true ? "bell.fill" : "bell.slash")
+                                    .foregroundColor(.white)
+                                    .scaleEffect(1.7)
+                            }
+                                
                         })
-                    }
+                       
+                        //ONCHANGE IF ISMORNING ACTIVE add notif, if not delete notif..
+                    }.padding(.horizontal, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                     VStack{
                         
                         Text("Night")
                             .foregroundColor(.white)
-                        
-                        Toggle(isOn: $isNightNotificationActive, label: {
-                        }).offset(x: -30, y: 0)
-                        .toggleStyle(SwitchToggleStyle(tint: .black))
-                        .onChange(of: isNightNotificationActive, perform: { value in
-                            if isNightNotificationActive == false {
+                        Button(action: {
+                            
+                            if isNightNotificationActive == true {
                                 deleteNotification(identifier: filterWithNight[0].requestIdentifier!)
-                                
+                                isNightNotificationActive.toggle()
                             } else {
                                 
                                 setNotification(hour: 18, drugName: (drug?.name!)!)
-                                
+                                isNightNotificationActive.toggle()
                             }
+
+                        }, label: {
+                            ZStack{
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(width: 80, height: 45, alignment: .center)
+                                .foregroundColor(isNightNotificationActive == true ? .red : Color(.themeDarkGray))
+                                Image(systemName: isNightNotificationActive == true ? "bell.fill" : "bell.slash")
+                                    .foregroundColor(.white)
+                                    .scaleEffect(1.7)
+                            }
+                                
                         })
-                    }
+                       
+                        //ONCHANGE IF ISMORNING ACTIVE add notif, if not delete notif..
+                    }.padding(.horizontal, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                     
                 }
                     
